@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getProducts, createProduct } = require('./controller');
+const { getProducts, createProduct, updateProduct } = require('./controller');
 
 /* GET product listing */
 router.get('/', async function (req, res, next) {
@@ -10,6 +10,12 @@ router.get('/', async function (req, res, next) {
 /** Create product */
 router.post('/', async function (req, res, next) {
   const response = await createProduct(req.body);
+  res.json(response);
+});
+/** Update product */
+router.put('/:id', async function (req, res, next) {
+  let id = req.params.id;
+  const response = await updateProduct(id, req.body);
   res.json(response);
 });
 
