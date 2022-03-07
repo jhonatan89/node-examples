@@ -18,7 +18,7 @@ async function createProduct(product) {
 async function updateProduct(id, product) {
   try {
     const productSaved = await Product.update(product, {where: {id: id}});
-    return { status: 200, productId: productSaved.id };
+    return { status: 200,  productId: productSaved.id };
   } catch (error) {
     console.log(error);
     return { status: 500, error: error };
