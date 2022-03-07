@@ -15,4 +15,14 @@ async function createProduct(product) {
   }
 }
 
-module.exports = { getProducts, createProduct };
+async function updateProduct(id,product) {
+  try {
+    const productSaved = await Product.update(product,{ where: { id: id } });
+    return { status: 201, productId: productSaved.id };
+  } catch (error) {
+    console.log(error);
+    return { status: 500, error: error };
+  }
+}
+
+module.exports = { getProducts, createProduct, updateProduct };
