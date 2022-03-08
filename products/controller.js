@@ -1,18 +1,19 @@
-const Product = require('./model');
+const products = [
+  {
+    id: 1,
+    name: 'Samnsung A20',
+    price: 200,
+    currency: { name: 'US Dollar', sign: '$' },
+  },
+];
 
-async function getProducts() {
-  const products = await Product.findAll();
+function getProducts() {
   return products;
 }
-
-async function createProduct(product) {
-  try {
-    const productSaved = await Product.create(product);
-    return { status: 201, productId: productSaved.id };
-  } catch (error) {
-    console.log(error);
-    return { status: 500, error: error };
-  }
+function updateProductById(id, body){
+  let index = products.findIndex((p)=> p.id === Number(id));
+  products[index] = body;
+  return products[index];
 }
 
-module.exports = { getProducts, createProduct };
+module.exports = { getProducts, updateProductById };
