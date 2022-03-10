@@ -15,4 +15,20 @@ async function createProduct(product) {
   }
 }
 
-module.exports = { getProducts, createProduct };
+async function updateProduct(product, pId) {
+  try {
+    const productUpdated = await Product.update(product,{where: { id: pId},  returning: true, plain: true});
+    if(productUpdated[1] > 0){
+      return { status: 200, productsUpdated: productUpdated[1] };
+    }
+    else{
+      return { status: 500, error: "No product found with such id" };
+    }
+  } catch (error) {
+    console.log(error);
+    return { status: 500, error: error };
+  }
+}
+
+
+module.exports = { getProducts, createProduct, updateProduct };
