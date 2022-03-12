@@ -1,6 +1,8 @@
 //const User = require('../models/user');
-const { getDbRef } = require('../../lib/mongo');
-const COLLECTION_NAME = 'users';
+const { getDbRef } = require("../../lib/mongo");
+const bcrypt = require("bcrypt");
+const COLLECTION_NAME = "users";
+const saltRounds = 10;
 
 const getAllUsers = async () => {
   try {
@@ -25,4 +27,18 @@ async function getUserByUserName(username) {
   }
 }
 
-module.exports = { getAllUsers, getUserByUserName };
+async function insertUser(user) {
+  try {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      bcrypt.hash(user.password, salt, function (err, hash) {
+        user.password = hash;
+        getDbRef().collection(COLLECTION_NAME).insertOne(user);
+        return user;
+      });
+    });
+  } catch (error) {
+    return { error };
+  }
+}
+
+module.exports = { getAllUsers, getUserByUserName, insertUser };
