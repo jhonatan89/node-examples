@@ -1,9 +1,9 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const { getAllUsers } = require('./controller');
+const { getAllUsers, insertUser } = require("./controller");
 
 /* GET users listing. */
-router.get('/', async function (req, res, next) {
+router.get("/", async function (req, res, next) {
   const users = await getAllUsers();
   res.json(users);
 });
@@ -11,5 +11,9 @@ router.get('/', async function (req, res, next) {
 /**
  * POST create user
  */
+router.post("/", async function (req, res, next) {
+  const newUser = await insertUser(req.body);
+  res.json(newUser);
+});
 
 module.exports = router;
