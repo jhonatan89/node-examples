@@ -1,28 +1,12 @@
 //const User = require('../models/user');
-const { getDbRef } = require('../../lib/mongo');
+const { getDbRef , create} = require('../../lib/mongo');
 const COLLECTION_NAME = 'users';
 
-const getAllUsers = async () => {
-  try {
-    const users = await getDbRef()
-      .collection(COLLECTION_NAME)
-      .find({})
-      .toArray();
-    return { users };
-  } catch (error) {
-    return { error };
-  }
-};
 
-async function getUserByUserName(username) {
-  try {
-    const user = await getDbRef()
-      .collection(COLLECTION_NAME)
-      .findOne({ username });
-    return user;
-  } catch (error) {
-    return { error };
-  }
+//FUNCION PARA CREAR EL USUARIO. RECIBE UN JSON CON LA INFORMACION REQUERIDA
+async function createUser(user){
+  create(user);
+
 }
 
-module.exports = { getAllUsers, getUserByUserName };
+module.exports = { createUser };
