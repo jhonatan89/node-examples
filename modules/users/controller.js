@@ -25,4 +25,17 @@ async function getUserByUserName(username) {
   }
 }
 
-module.exports = { getAllUsers, getUserByUserName };
+function register(matchDocument, res){
+   getDbRef()
+    .collection(COLLECTION_NAME)
+    .insertOne(matchDocument, function (err, result) {
+      if (err) {
+        res.status(400).send("Error inserting matches!");
+      } else {
+        console.log(`Added a new match with id ${result.insertedId}`);
+        res.status(204).send();
+      }
+    });
+}
+
+module.exports = { getAllUsers, getUserByUserName, register };

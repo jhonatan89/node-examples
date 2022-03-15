@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const { getAllUsers } = require('./controller');
+const { getAllUsers, register } = require('./controller');
+const bcrypt = require ('bcrypt');
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
@@ -11,5 +12,16 @@ router.get('/', async function (req, res, next) {
 /**
  * POST create user
  */
+ router.post('/', async function (req, res) {
+  bcrypt.hash(req.body.password, 10, (err, hash) => {
+    const matchDocument = {
+      username: req.body.username,
+      email: req.body.email,
+      password : hash,
+      roles: req.body.roles
+    };
+    register(matchDocument, res);
+  });
+});
 
 module.exports = router;
