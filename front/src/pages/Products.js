@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../components/Card';
 import './Product.scss';
+import { AuthContext } from '../hooks/AuthContext'
 
 export const Products = () => {
+  const { toggle } = React.useContext(AuthContext);
+  console.log(toggle);
   const url = '/api/products';
   const [products, setProducts] = useState([]);
 
@@ -11,8 +14,13 @@ export const Products = () => {
   }, []);
 
   const fetchProducts = async () => {
-    const resp = await fetch(url);
+    const resp = await fetch(url, {
+      headers: {
+        'Authorization': `token ${toggle}`
+      }
+    });
     const data = await resp.json();
+    console.log(data)
 
     const productsFromBE = data.products.map((resp) => {
       return {

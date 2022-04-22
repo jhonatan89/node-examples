@@ -1,7 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../hooks/AuthContext'
 
 export const NavBar = () => {
+  const { toggle, toggleFunction } = React.useContext(AuthContext);
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+ 
+    toggleFunction('');
+
+  };
+
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
       <a className='navbar-brand' href='#main'>
@@ -25,16 +35,27 @@ export const NavBar = () => {
               Gallery
             </Link>
           </li>
+          {toggle !== '' ? <li className='nav-item'>
+            <Link className='nav-link' to='/products'>
+              Products
+            </Link>
+          </li> : <></>}
+          
           <li className='nav-item'>
             <Link className='nav-link' to='/contact-form'>
               Contact
             </Link>
           </li>
           <li className='nav-item'>
-            <Link className='nav-link' to='/products'>
-              Products
+            <Link className='nav-link' to='/login'>
+              Login
             </Link>
           </li>
+          {toggle !== '' ? <li className='nav-item'>
+            <button type="submit" className="btn btn-primary" onClick={handleLogout}>
+              Logout
+            </button>
+          </li> : <></>}
         </ul>
       </div>
     </nav>
