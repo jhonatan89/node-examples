@@ -1,14 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { Auth0Provider } from '@auth0/auth0-react';
+
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clientId = process.env.REACT_APP_AUTH0_CLIENTID;
+const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Auth0Provider
+    domain={domain}
+    clientId={clientId}
+    audience={audience}
+    redirectUri={window.location.origin}
+  >
     <App />
-  </React.StrictMode>,
+  </Auth0Provider>,
   document.getElementById('root')
 );
 

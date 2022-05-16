@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'front/build')));
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/products', checkToken, productRouter); //uncomment this line and comment the next one.
+app.use('/api/products', productRouter); //uncomment this line and comment the next one.
 //app.use('/api/products', productRouter);
 
 app.get('*', (req, res) => {
@@ -43,8 +43,8 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  console.log('error->', err.message);
+  res.status(err.status || 500).send('error');
 });
 
 module.exports = app;

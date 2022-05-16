@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import LoginButton from './LoginButton';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const NavBar = () => {
-  const { user } = useContext(UserContext);
+  const { userBack } = useContext(UserContext);
+  const { user, isAuthenticated, isLoading } = useAuth0();
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
       <a className='navbar-brand' href='#main'>
@@ -39,12 +42,18 @@ export const NavBar = () => {
               </Link>
             )}
           </li>
+          <li className='nav-item'>
+            {user && (
+              <Link className='nav-link' to='/profile'>
+                Profile
+              </Link>
+            )}
+          </li>
+          <li className='nav-item'></li>
         </ul>
       </div>
       <div className='navbar-nav-controls'>
-        <Link className='nav-link' to='/login'>
-          {user ? `Hello, ${user.name}` : 'Sign In'}
-        </Link>
+        <LoginButton></LoginButton>
       </div>
     </nav>
   );

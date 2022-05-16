@@ -2,23 +2,33 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Card } from '../components/Card';
 import './Product.scss';
 import { UserContext } from '../context/UserContext';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const Products = () => {
   const url = '/api/products';
   const [products, setProducts] = useState({ data: [], state: 'loading' });
-  const { user } = useContext(UserContext);
+  //const { user } = useContext(UserContext);
+
+  // Using auth0 custom hook
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+  async function getToken() {
+    const token = await getAccessTokenSilently();
+    return token;
+  }
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
+    const token = await getToken();
     const resp = await fetch(url, {
       method: 'get',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     const data = await resp.json();

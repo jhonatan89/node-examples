@@ -6,6 +6,8 @@ import { Gallery } from './pages/Gallery';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Products } from './pages/Products';
 import { Login } from './pages/Login';
+import { Profile } from './pages/Profile';
+
 import { UserContext } from './context/UserContext';
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
             />
             <Route exact path='/products' element={<Products></Products>} />
             <Route exact path='/login' element={<Login></Login>} />
+            <Route exact path='/profile' element={<Profile></Profile>} />
             <Route
               path='*'
               element={
