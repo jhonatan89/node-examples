@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
 import LoginButton from './LoginButton';
 import { useAuth0 } from '@auth0/auth0-react';
+import { FormattedMessage } from 'react-intl';
 
 export const NavBar = () => {
-  const { userBack } = useContext(UserContext);
   const { user, isAuthenticated, isLoading } = useAuth0();
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
@@ -27,25 +26,25 @@ export const NavBar = () => {
         <ul className='navbar-nav'>
           <li className='nav-item active'>
             <Link className='nav-link' to='/gallery'>
-              Gallery
+              <FormattedMessage id='gallery' />
             </Link>
           </li>
           <li className='nav-item'>
             <Link className='nav-link' to='/contact-form'>
-              Contact
+              <FormattedMessage id='contact' />
             </Link>
           </li>
           <li className='nav-item'>
             {user && (
               <Link className='nav-link' to='/products'>
-                Products
+                <FormattedMessage id='products' />
               </Link>
             )}
           </li>
           <li className='nav-item'>
             {user && (
               <Link className='nav-link' to='/profile'>
-                Profile
+                <FormattedMessage id='profile' />
               </Link>
             )}
           </li>

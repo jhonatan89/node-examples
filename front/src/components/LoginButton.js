@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { FormattedMessage } from 'react-intl';
 
 const LoginButton = () => {
   const { loginWithRedirect, isAuthenticated, logout, user } = useAuth0();
@@ -8,7 +9,7 @@ const LoginButton = () => {
     <>
       {!isAuthenticated ? (
         <button className='btn btn-success' onClick={() => loginWithRedirect()}>
-          Log In
+          <FormattedMessage id='login' />
         </button>
       ) : (
         <div className='btn-group' role='group'>
@@ -24,7 +25,7 @@ const LoginButton = () => {
           <ul className='dropdown-menu' aria-labelledby='btnGroupDrop1'>
             <li>
               <a className='dropdown-item' onClick={() => logout()}>
-                Logout
+                <FormattedMessage id='logout' />
               </a>
             </li>
           </ul>
